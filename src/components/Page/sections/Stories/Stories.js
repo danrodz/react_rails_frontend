@@ -6,9 +6,10 @@ import {
   Button,
   Panel
 } from 'react-bootstrap';
+import TextEditor from '../../../../shared/components/TextEditor/TextEditor';
 
 const Stories = props => {
-  const { storyTitle, storyBody, handleInputChange, handleStorySubmit } = props;
+  const { storyTitle, handleInputChange, handleStorySubmit } = props;
 
   return (
     <Panel bsStyle="success">
@@ -28,15 +29,7 @@ const Stories = props => {
               name="storyTitle"
             />
           </FormGroup>
-          <FormGroup controlId="formControlStoryTextarea">
-            <FormControl
-              componentClass="textarea"
-              placeholder="+Add Story Text Here"
-              value={storyBody}
-              onChange={handleInputChange}
-              name="storyBody"
-            />
-          </FormGroup>
+          <TextEditor />
           <Button type="submit">Share Story</Button>
         </form>
       </Panel.Body>

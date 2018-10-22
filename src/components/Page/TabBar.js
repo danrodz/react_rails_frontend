@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab, Row } from 'react-bootstrap';
+import { Tabs, Tab, Row, Col, Nav } from 'react-bootstrap';
 
 const TabBar = props => {
   const { sectionKey, handleSectionClick } = props;
@@ -7,7 +7,7 @@ const TabBar = props => {
     <Row>
       <Tabs activeKey={sectionKey} onSelect={handleSectionClick}>
         <Tab eventKey={1} title="About" />
-        <Tab eventKey={2} title="Life" />
+        <Tab bsStyle="info" eventKey={2} title="Life" />
         <Tab eventKey={3} title="Gallery" />
         <Tab eventKey={4} title="Stories" />
       </Tabs>

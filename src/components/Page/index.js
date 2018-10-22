@@ -1,8 +1,11 @@
 import React, { Fragment, Component } from 'react';
-import { Jumbotron } from 'react-bootstrap';
+import { Jumbotron, Row, Col } from 'react-bootstrap';
 import TabBar from './TabBar';
-import Stories from './sections/Stories/Stories';
 import About from './sections/About/About';
+import Life from './sections/Life/Life';
+import Stories from './sections/Stories/Stories';
+import Gallery from './sections/Gallery/Gallery';
+import ImageModal from '../../shared/components/ImageModal/ImageModal';
 
 class Page extends Component {
   state = {
@@ -10,7 +13,9 @@ class Page extends Component {
     storyTitle: '',
     storyBody: '',
     tribute: '',
-    tributeType: 'candle'
+    tributeType: 'candle',
+    showImageModal: false,
+    imageModalSrc: ''
   };
 
   handleSectionClick = sectionKey => {
@@ -33,33 +38,70 @@ class Page extends Component {
     this.setState({ storyTitle, storyBody });
   };
 
+  toggleImageModal = () => {
+    const showImageModal = !this.state.showImageModal;
+    this.setState({ showImageModal });
+  };
+
+  onImageThumbnailClick = imageModalSrc => {
+    const showImageModal = !this.state.showImageModal;
+    this.setState({ showImageModal, imageModalSrc });
+  };
+
   render() {
     const {
       sectionKey,
       storyTitle,
       storyBody,
       tribute,
-      tributeType
+      tributeType,
+      showImageModal,
+      imageModalSrc
     } = this.state;
+
     return (
       <Fragment>
-        <Jumbotron>
-          <h1>Name</h1>
-          <p>Year</p>
-          <TabBar
-            sectionKey={sectionKey}
-            handleSectionClick={this.handleSectionClick}
-          />
+        <Jumbotron
+          style={{
+            backgroundImage:
+              'url(https://2.bp.blogspot.com/-qme1vmcjGxw/UEhXYuTIrCI/AAAAAAAAA28/I0BMipYvcHI/s1600/donau-sunrise-full-HD-nature-background-wallpaper-for-laptop-widescreen.jpg)',
+            backgroundPosition: 'center center',
+            color: 'white'
+          }}>
+          <div className="container">
+            <Row>
+              <Col smOffset={1} sm={10}>
+                <h1>Selena Quintanilla</h1>
+              </Col>
+              <Col
+                smOffset={4}
+                sm={4}
+                style={{
+                  backgroundImage:
+                    'url(https://upload.wikimedia.org/wikipedia/en/4/40/Selena_Quintanilla-P%C3%A9rez.jpg)',
+                  height: '280px',
+                  width: '200px',
+                  boxShadow: '-5px 10px 20px white',
+                  borderRadius: '5px'
+                }}
+              />
+            </Row>
+            <Row>
+              <Col smOffset={4} sm={4}>
+                <h2>1971- 1995</h2>
+              </Col>
+            </Row>
+            <Row>
+              <Col smOffset={3} sm={6}>
+                <TabBar
+                  sectionKey={sectionKey}
+                  handleSectionClick={this.handleSectionClick}
+                />
+              </Col>
+            </Row>
+          </div>
         </Jumbotron>
         <div className="container">
-          {this.state.sectionKey === 4 ? (
-            <Stories
-              storyTitle={storyTitle}
-              storyBody={storyBody}
-              handleInputChange={this.handleInputChange}
-              handleStorySubmit={this.handleStorySubmit}
-            />
-          ) : null}
           {this.state.sectionKey === 1 ? (
             <About
               tribute={tribute}
@@ -68,7 +110,24 @@ class Page extends Component {
               handleTributeTypeChange={this.handleTributeTypeChange}
             />
           ) : null}
+          {this.state.sectionKey === 2 ? <Life /> : null}
+          {this.state.sectionKey === 3 ? (
+            <Gallery onImageThumbnailClick={this.onImageThumbnailClick} />
+          ) : null}
+          {this.state.sectionKey === 4 ? (
+            <Stories
+              storyTitle={storyTitle}
+              storyBody={storyBody}
+              handleInputChange={this.handleInputChange}
+              handleStorySubmit={this.handleStorySubmit}
+            />
+          ) : null}
         </div>
+        <ImageModal
+          show={showImageModal}
+          onHide={this.toggleImageModal}
+          src={imageModalSrc}
+        />
       </Fragment>
     );
   }
